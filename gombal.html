@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeri GombalMukio</title>
+  <!-- Font & Ikon (opsional, untuk estetika) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(145deg, #f9f3f0 0%, #ffece4 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Container utama */
+    .gallery-wrapper {
+      max-width: 1300px;
+      width: 100%;
+      background: rgba(255, 245, 240, 0.6);
+      backdrop-filter: blur(2px);
+      border-radius: 3rem 3rem 2rem 2rem;
+      padding: 2rem 2rem 3rem;
+      box-shadow: 0 20px 40px rgba(180, 100, 80, 0.2),
+                  inset 0 1px 4px rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 220, 210, 0.5);
+    }
+
+    /* Header — GombalMukio */
+    .brand {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 3px double #ecc4b5;
+    }
+
+    .brand h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #5e2e2a;
+      text-shadow: 3px 3px 0 #f0cfc0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand h1 i {
+      color: #c77966;
+      font-size: 2.4rem;
+      text-shadow: none;
+    }
+
+    .domain-tag {
+      background: #3f201c;
+      padding: 0.5rem 1.4rem;
+      border-radius: 60px;
+      color: #ffded5;
+      font-weight: 500;
+      font-size: 1.1rem;
+      letter-spacing: 0.3px;
+      box-shadow: inset 0 -2px 0 #b27a6b;
+      backdrop-filter: blur(2px);
+      background: rgba(60, 30, 26, 0.8);
+      border: 1px solid #dbb6aa;
+    }
+
+    .domain-tag i {
+      margin-right: 6px;
+      color: #f7c5b3;
+    }
+
+    /* Subhead / deskripsi */
+    .subhead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+      color: #4f312c;
+    }
+
+    .subhead p {
+      font-size: 1.15rem;
+      background: rgba(235, 205, 195, 0.3);
+      padding: 0.3rem 1.5rem;
+      border-radius: 40px;
+      backdrop-filter: blur(2px);
+      border: 1px solid #ecd2c8;
+      font-weight: 400;
+    }
+
+    .subhead p i {
+      margin-right: 10px;
+      color: #b35f4a;
+    }
+
+    .subhead span {
+      font-weight: 300;
+      background: #fff2ec;
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      border: 1px solid #eccfc4;
+      color: #4b2b26;
+    }
+
+    /* Galeri grid — responsive */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.8rem;
+      margin-top: 0.5rem;
+    }
+
+    /* Kartu foto */
+    .photo-card {
+      background: rgba(255, 245, 240, 0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 28px 28px 28px 28px;
+      overflow: hidden;
+      box-shadow: 0 8px 18px rgba(130, 70, 60, 0.15),
+                  inset 0 0 0 1px rgba(255, 235, 225, 0.7);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(235, 200, 188, 0.5);
+    }
+
+    .photo-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 30px rgba(150, 80, 65, 0.25);
+      background: rgba(255, 248, 244, 0.9);
+      border-color: #dbb9ad;
+    }
+
+    .photo-card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      background: #efdad2;
+      transition: 0.3s;
+      border-bottom: 3px solid #eacec0;
+    }
+
+    .photo-card:hover img {
+      filter: brightness(1.03) saturate(1.05);
+    }
+
+    .card-info {
+      padding: 1rem 1.2rem 1.2rem;
+      background: rgba(255, 242, 237, 0.5);
+      backdrop-filter: blur(4px);
+    }
+
+    .card-info h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #422622;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      letter-spacing: -0.2px;
+    }
+
+    .card-info h3 i {
+      color: #bf7b68;
+      font-size: 1rem;
+    }
+
+    .card-info p {
+      font-size: 0.9rem;
+      color: #5f403a;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.8;
+    }
+
+    .card-info p i {
+      color: #9f6a5a;
+      width: 1.2rem;
+    }
+
+    /* Footer / domain */
+    .footer-note {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 1rem;
+      color: #573d37;
+      border-top: 2px dashed #dfc2b6;
+      padding-top: 1.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem 2.5rem;
+    }
+
+    .footer-note .domain-badge {
+      background: #39211d;
+      color: #faded2;
+      padding: 0.3rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      box-shadow: inset 0 -2px 0 #ad7a6a;
+      font-size: 1.1rem;
+    }
+
+    .footer-note .domain-badge i {
+      margin-right: 8px;
+      color: #f7bcab;
+    }
+
+    .footer-note small {
+      opacity: 0.7;
+      font-weight: 300;
+      background: rgba(235, 210, 200, 0.3);
+      padding: 0.2rem 1.4rem;
+      border-radius: 60px;
+      backdrop-filter: blur(2px);
+    }
+
+    /* Responsive touch */
+    @media (max-width: 680px) {
+      .brand h1 {
+        font-size: 2rem;
+        flex-wrap: wrap;
+      }
+      .brand {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+      .domain-tag {
+        font-size: 0.9rem;
+        padding: 0.3rem 1.2rem;
+      }
+      .subhead {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+      .gallery-wrapper {
+        padding: 1.5rem 1rem;
+      }
+    }
+
+    /* sedikit gaya untuk ikon & aksen */
+    .fa-heart, .fa-camera, .fa-image, .fa-star {
+      filter: drop-shadow(0 2px 2px rgba(160, 80, 60, 0.2));
+    }
+  </style>
+</head>
+<body>
+  <div class="gallery-wrapper">
+    <!-- HEADER dengan domain galeri gombalmukio.io -->
+    <div class="brand">
+      <h1>
+        <i class="fas fa-camera-retro"></i> 
+        Galeri GombalMukio
+      </h1>
+      <div class="domain-tag">
+        <i class="fas fa-globe"></i> galeri.gombalmukio.io
+      </div>
+    </div>
+
+    <!-- Subhead / motto -->
+    <div class="subhead">
+      <p><i class="fas fa-image"></i> 12 momen · cinta, senyum & gombal abadi</p>
+      <span><i class="fas fa-heart" style="color:#b35f4a;"></i> #MukioGombal</span>
+    </div>
+
+    <!-- GRID GALERI FOTO (12 foto dengan gaya gombal) -->
+    <div class="gallery-grid">
+      <!-- 1 -->
+      <div class="photo-card">
+        <img src="https://picsum.photos/id/1015/400/400" alt="Momen romantis">
+        <div class="card-info">
+          <h3><i class="fas fa-heart" style="color:#c0624b;"></i> Senyum pertama</h3>
+          <p><i class="fas fa-map-pin"></i> Kafe Senja</p>
+        </div>
+      </div>
+      <!-- 2 -->
+      <div class="photo-card">
+        <img src="https://picsum.photos/id/1018/400/400" alt="Matahari terbenam">
+        <div class="card-info">
+          <h3><i class="fas fa-sun"></i> Golden hour</h3>
+          <p><i class="fas fa-map-pin"></i> Bukit Gombal</p>
+        </div>
+      </div>
+      <!-- 3 -->
+      <div class="photo-card">
+        <img src="https://picsum.photos/id/1020/400/400" alt="Bunga & cinta">
+        <div class="card-info">
+          <h3><i class="fas fa-seedling"></i> Taman asmara</h3>
+          <p><i class="fas fa-map-pin"></i> Kebun Mukio</p>
+        </div>
+      </div>
+      <!-- 4 -->
+      <div class="photo-card">
+        <img src="https://picsum.photos/id/1024/400/400" alt="Pasangan bahagia">
+        <div class="card-info">
+          <h3><i class="fas fa-hand-holding-heart"></i> Janji</h3>
+          <p><i class="fas fa-map-pin"></i> Jembatan Kayu</p>
+        </div>
+      </div>
+      <!-- 5 -->
+      <div class="photo-card">
+        <img src="https://picsum.photos/id/1027/400/400" alt="Cerah ceria">
+        <div class="card-info">
+          <h3><i class="fas fa-smile-wink"></i> Gombal pagi</h3>
+          <p><i class="fas fa-map-pin"></i> Pantai Selatan</p>
+        </div>
+      </div>
+      <!-- 6 -->
+      <div class="photo-card">
+        <img src="https://picsum.photos/id/1035/400/400" alt="Malam berbintang">
+        <div class="card-info">
+          <h3><i class="fas fa-moon"></i> Bintang & kamu</h3>
+          <p><i class="fas fa-map-pin"></i> Atap kota</p>
+        </div>
+      </div>
+      <!-- 7 -->
+      <div class="photo-card">
+        <img src="https://picsum.photos/id/1043/400/400" alt="Pelukan hangat">
+        <div class="card-info">
+          <h3><i class="fas fa-people-arrows"></i> Pelukan</h3>
+          <p><i class="fas fa-map-pin"></i> Taman rindu</p>
+        </div>
+      </div>
+      <!-- 8 -->
+      <div class="photo-card">
+        <img src="https://picsum.photos/id/1044/400/400" alt="Jalan bersama">
+        <div class="card-info">
+          <h3><i class="fas fa-walking"></i> Langkah searah</h3>
+          <p><i class="fas fa-map-pin"></i> Jalur kenangan</p>
+        </div>
+      </div>
+      <!-- 9 -->
+      <div class="photo-card">
+        <img src="https://picsum.photos/id/1055/400/400" alt="Bunga mawar">
+        <div class="card-info">
+          <h3><i class="fas fa-rose"></i> Mawar merah</h3>
+          <p><i class="fas fa-map-pin"></i> Florist Mukio</p>
+        </div>
+      </div>
+      <!-- 10 -->
+      <div class="photo-card">
+        <img src="https://picsum.photos/id/1067/400/400" alt="Cafe vintage">
+        <div class="card-info">
+          <h3><i class="fas fa-mug-saucer"></i> Kopi & gombal</h3>
+          <p><i class="fas fa-map-pin"></i> Retro Cafe</p>
+        </div>
+      </div>
+      <!-- 11 -->
+      <div class="photo-card">
+        <img src="https://picsum.photos/id/1074/400/400" alt="Pelangi">
+        <div class="card-info">
+          <h3><i class="fas fa-rainbow"></i> Pelangi cinta</h3>
+          <p><i class="fas fa-map-pin"></i> Bukit pelangi</p>
+        </div>
+      </div>
+      <!-- 12 -->
+      <div class="photo-card">
+        <img src="https://picsum.photos/id/1084/400/400" alt="Momen terakhir">
+        <div class="card-info">
+          <h3><i class="fas fa-star"></i> Bintang Mukio</h3>
+          <p><i class="fas fa-map-pin"></i> Puncak asmara</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER DOMAIN & CREDIT -->
+    <div class="footer-note">
+      <div class="domain-badge">
+        <i class="fas fa-link"></i> galeri.gombalmukio.io
+      </div>
+      <small><i class="fas fa-code"></i> dengan gombal & cinta · 2026</small>
+      <small><i class="fas fa-copyright"></i> Mukio Studio</small>
+    </div>
+  </div>
+</body>
+</html>
